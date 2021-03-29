@@ -1,7 +1,24 @@
 import logo from './logo.svg';
 import './App.css';
+import {useState} from 'react'
 
 function App() {
+ const [pageData, setPageData] = useState('')
+ const [vulns, setVulns] = useState('')
+  const getData = async () => {
+    await fetch('http://localhost:3000',
+    {
+    }).then(res => res.text()).then(data => {
+      console.log('this is our data', data)
+      setPageData(data)
+    })
+    await fetch('http://localhost:3000/vulns').then(res => res.text()).then(data => {
+      console.log('vulns', data.length)
+      setVulns(data.length)
+    })
+  }
+  getData();
+
   return (
     <div className="App">
       <header className="App-header">
@@ -15,7 +32,7 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          {pageData}<br />{vulns}
         </a>
       </header>
     </div>
